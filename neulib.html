@@ -312,6 +312,59 @@
       Library is currently open
     </div>
   </div>
+<script>
+window.onload = () => {
+  // Check if user exists
+  const session = JSON.parse(localStorage.getItem('neuLibrarySession'));
+  if (session) {
+    // Dynamic welcome message
+    const heading = document.querySelector('.welcome-heading');
+    heading.innerHTML = `Welcome back, <span>${session.fullName || session.email}</span>!`;
+    
+    // 👇 ADD ADMIN SWITCH BUTTON (only for admins)
+    if (session.isAdmin || session.role === 'admin') {
+      // Add button to header-right
+      const headerRight = document.querySelector('.header-right');
+      headerRight.innerHTML = `
+        <a href="#" onclick="switchToAdmin()" class="admin-switch-btn">
+          <svg viewBox="0 0 24 24" style="width:15px;height:15px;">
+            <path d="M12 2L2 7v5c0 11.46 7.21 21 16 21h2c2.96 0 4-2.04 4-4V7l-10-5z"/>
+            <polyline points="2 17 16 17 16 21"/>
+          </svg>
+          Admin Panel
+        </a>
+      `;
+      
+      // Add styles
+      const style = document.createElement('style');
+      style.textContent = `
+        .admin-switch-btn {
+          display: inline-flex; align-items: center; gap: 8px;
+          padding: 9px 20px; border: 2px solid var(--orange);
+          background: rgba(224,129,52,.15); color: var(--orange);
+          border-radius: 12px; font-family: 'Outfit', sans-serif;
+          font-size: 13.5px; font-weight: 600; cursor: pointer;
+          text-decoration: none; transition: all .3s;
+        }
+        .admin-switch-btn:hover {
+          background: var(--orange); color: white;
+          transform: translateY(-2px); box-shadow: 0 6px 20px rgba(224,129,52,.4);
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+};
 
+// 👇 SWITCH TO ADMIN FUNCTION
+function switchToAdmin() {
+  const session = JSON.parse(localStorage.getItem('neuLibrarySession'));
+  // Ensure admin role
+  session.isAdmin = true;
+  session.role = 'admin';
+  localStorage.setItem('neuLibrarySession', JSON.stringify(session));
+  window.location.href = 'admin-dashboard.html';
+}
+</script>
 </body>
 </html>
