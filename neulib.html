@@ -355,21 +355,5 @@ window.onload = () => {
     }
   }
 };
-
-// 👇 SWITCH TO ADMIN FUNCTION
-function switchToAdmin() {
-  const session = JSON.parse(localStorage.getItem('neuLibrarySession'));
-  // Ensure admin role
-  session.isAdmin = true;
-  session.role = 'admin';
-  localStorage.setItem('neuLibrarySession', JSON.stringify(session));
-  window.location.href = 'admin-dashboard.html';
-}
-
-  function logout() {
-  localStorage.removeItem('neuLibrarySession');
-  window.location.href = 'neulogin.html';
-}
-</script>
 </body>
 </html>
