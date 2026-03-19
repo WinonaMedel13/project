@@ -284,7 +284,7 @@
 
     <!-- Right: Logout -->
     <div class="header-right">
-      <a href="index.html" class="logout-btn">
+     <a href="#" onclick="logout()" class="logout-btn">
         <svg viewBox="0 0 24 24">
           <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
           <polyline points="16 17 21 12 16 7"/>
@@ -364,6 +364,11 @@ function switchToAdmin() {
   session.role = 'admin';
   localStorage.setItem('neuLibrarySession', JSON.stringify(session));
   window.location.href = 'admin-dashboard.html';
+}
+
+  function logout() {
+  localStorage.removeItem('neuLibrarySession');
+  window.location.href = 'neulogin.html';
 }
 </script>
 </body>
