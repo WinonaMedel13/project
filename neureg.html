@@ -392,7 +392,7 @@ body::after{
       </div>
 
       <div class="full" style="animation-delay:.45s; opacity:0; animation: fieldIn .5s .45s ease forwards;">
-        <button type="button" class="btn-login" onclick="window.location.href='neulogin.html'">
+        <button type="button" class="btn-login" onclick="window.location.href='index.html'">
           Already have an account? Log In
         </button>
       </div>
@@ -474,7 +474,7 @@ body::after{
       } else {
         localStorage.setItem('newUserEmail', email);
         showToast(`✅ Welcome ${firstName}! Redirecting...`, 'success');
-        setTimeout(() => window.location.href = 'neulogin.html', 2000);
+        setTimeout(() => window.location.href = 'index.html', 2000);
       }
 
     } catch (error) {
