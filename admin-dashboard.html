@@ -73,7 +73,7 @@
 
     // Check admin
     const session=JSON.parse(localStorage.getItem('neuLibrarySession'));
-    if(!session?.isAdmin)window.location.href='neulogin.html';
+    if(!session?.isAdmin)window.location.href='index.html';
 
     async function loadStats(){
       try{
@@ -105,7 +105,7 @@
 
     function logout(){
       localStorage.removeItem('neuLibrarySession');
-      window.location.href='neulogin.html';
+      window.location.href='index.html';
     }
 
     loadStats();
