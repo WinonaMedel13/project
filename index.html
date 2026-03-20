@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NEU Library Visitor Log - Login</title>
-  <!-- ✅ REMOVED: cdn.skypack.dev (caused Google Safe Browsing flag) -->
-  <!-- ✅ REMOVED: Content-Security-Policy meta tag (was referencing flagged CDN) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
@@ -24,7 +22,23 @@
     html, body {
       height: 100%;
       font-family: 'Outfit', sans-serif;
-      overflow: hidden;
+      /* CHANGED: removed overflow:hidden so the page can scroll */
+      overflow: auto;
+    }
+
+    /* ADDED: styled scrollbar to match the theme */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(20, 30, 80, 0.6);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(224, 129, 52, 0.6);
+      border-radius: 8px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(224, 129, 52, 0.9);
     }
 
     .bg-layer {
@@ -65,7 +79,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      /* CHANGED: allow vertical scroll if content is taller than screen */
+      padding: 40px 20px;
     }
 
     .card {
@@ -576,7 +591,7 @@
 
   <div class="toast" id="toast"></div>
 
-  <!-- ✅ ONLY ONE Supabase script tag — jsdelivr is safe and trusted -->
+  <!-- Supabase CDN — jsdelivr only, no skypack -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
