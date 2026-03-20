@@ -686,20 +686,32 @@ select::placeholder { color: rgba(255,255,255,0.3); }
     }
   }
 
-  // 🛡️ Password toggle (keep yours)
-  const toggleBtn = document.getElementById('togglePass');
-  const passwordInput = document.getElementById('password');
-  const eyeIcon = document.getElementById('eyeIcon');
-  let passVisible = false;
+// 🛡️ FIXED Password toggle
+const toggleBtn = document.getElementById('togglePass');
+const passwordInput = document.getElementById('password');
+const eyeIcon = document.getElementById('eyeIcon');
+let passVisible = false;
 
-  toggleBtn.addEventListener('click', () => {
-    passVisible = !passVisible;
-    passwordInput.type = passVisible ? 'text' : 'password';
-    eyeIcon.innerHTML = passVisible
-      ? `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`
-      : `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
-  });
-
+toggleBtn.addEventListener('click', () => {
+  passVisible = !passVisible;
+  passwordInput.type = passVisible ? 'text' : 'password';
+  
+  if (passVisible) {
+    // 👁️ OPEN EYE (show password)
+    eyeIcon.innerHTML = `
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+      <circle cx="12" cy="12" r="3"/>
+    `;
+  } else {
+    // 👁️ CLOSED EYE (hide password) - FIXED PATH
+    eyeIcon.innerHTML = `
+      <path d="M2 2l20 20"/>
+      <path d="M6.712 6.72C3.664 8.954 2.24 11.21 2 12.5s1.664 3.546 4.712 5.78L8 18l-1-1"/>
+      <path d="M16 16l1 1 3.29-3.29C19.336 12.546 20.76 11.29 21 10.5s-.664-3.546-3.712-5.78L16 6l1 1"/>
+      <circle cx="12" cy="12" r="3"/>
+    `;
+  }
+});
   // Modal functions (keep yours)
   function openModal(id) { document.getElementById(id).classList.add('active'); }
   function closeModal(id) { document.getElementById(id).classList.remove('active'); }
