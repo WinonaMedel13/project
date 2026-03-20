@@ -596,62 +596,84 @@
       toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 3200);
     }
 
-    async function handleLogin(e) {
-      e.preventDefault();
-      var email = document.getElementById('email').value.trim();
-      var pass = document.getElementById('password').value;
-      var loginBtn = document.getElementById('loginBtn');
+   async function handleLogin(e) {
+  e.preventDefault();
+  
+  // ✅ GET PURPOSE FROM YOUR DROPDOWN (id="purposeVisit")
+  var purpose = document.getElementById('purposeVisit').value;
+  var email = document.getElementById('email').value.trim();
+  var pass = document.getElementById('password').value;
+  var loginBtn = document.getElementById('loginBtn');
 
-      loginBtn.disabled = true;
-      loginBtn.textContent = 'Signing In...';
-      showToast('Checking credentials...');
+  // ✅ VALIDATE PURPOSE SELECTED
+  if (!purpose || purpose === '') {
+    showToast('Please select your purpose of visit');
+    return;
+  }
 
-      try {
-        var result = await client
-          .from('visitor_logs')
-          .select('*')
-          .eq('email', email)
-          .eq('password', btoa(pass + 'neu-lib'))
-          .single();
+  loginBtn.disabled = true;
+  loginBtn.textContent = 'Signing In...';
+  showToast('Checking credentials...');
 
-        var data = result.data;
-        var error = result.error;
+  try {
+    // 1. Check login credentials
+    var result = await client
+      .from('visitor_logs')
+      .select('*')
+      .eq('email', email)
+      .eq('password', btoa(pass + 'neu-lib'))
+      .single();
 
-        if (error || !data) {
-          showToast('Invalid email or password');
-          loginBtn.disabled = false;
-          loginBtn.textContent = 'Sign In to Library System';
-          return;
-        }
+    var data = result.data;
+    var error = result.error;
 
-        var userData = {
-          id: data.id,
-          email: data.email,
-          fullName: data.full_name || (data.first_name + ' ' + data.last_name),
-          schoolId: data.school_id,
-          isAdmin: data.email === 'spokeWasHere@gmail.com' || data.email === 'jcesperanza@neu.edu.ph',
-          role: (data.email === 'spokeWasHere@gmail.com' || data.email === 'jcesperanza@neu.edu.ph') ? 'admin' : 'user'
-        };
-
-        localStorage.setItem('neuLibrarySession', JSON.stringify(userData));
-        showToast('Welcome ' + userData.fullName + '!');
-
-        setTimeout(function() {
-          if (userData.isAdmin) {
-            window.location.href = 'admin-dashboard.html';
-          } else {
-            window.location.href = 'neulib.html';
-          }
-        }, 1200);
-
-      } catch (err) {
-        showToast('Login failed. Try again.');
-        console.error(err);
-      } finally {
-        loginBtn.disabled = false;
-        loginBtn.textContent = 'Sign In to Library System';
-      }
+    if (error || !data) {
+      showToast('Invalid email or password');
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Sign In to Library System';
+      return;
     }
+
+    // ✅ 2. UPDATE PURPOSE IN DATABASE
+    var updateResult = await client
+      .from('visitor_logs')
+      .update({ purpose_of_visit: purpose })  // ✅ SAVES SELECTED PURPOSE
+      .eq('id', data.id);
+
+    console.log('Purpose saved:', purpose);  // ✅ DEBUG - check browser console
+    console.log('Update result:', updateResult);
+
+    // 3. Save session WITH purpose
+    var userData = {
+      id: data.id,
+      email: data.email,
+      fullName: data.full_name || (data.first_name + ' ' + data.last_name),
+      schoolId: data.school_id,
+      purposeOfVisit: purpose,  // ✅ Include purpose
+      isAdmin: data.email === 'spokeWasHere@gmail.com' || data.email === 'jcesperanza@neu.edu.ph',
+      role: (data.email === 'spokeWasHere@gmail.com' || data.email === 'jcesperanza@neu.edu.ph') ? 'admin' : 'user'
+    };
+
+    localStorage.setItem('neuLibrarySession', JSON.stringify(userData));
+    showToast('Welcome ' + userData.fullName + '! Purpose: ' + purpose);
+
+    // Redirect
+    setTimeout(function() {
+      if (userData.isAdmin) {
+        window.location.href = 'admin-dashboard.html';
+      } else {
+        window.location.href = 'neulib.html';
+      }
+    }, 1200);
+
+  } catch (err) {
+    showToast('Login failed. Try again.');
+    console.error('Error:', err);
+  } finally {
+    loginBtn.disabled = false;
+    loginBtn.textContent = 'Sign In to Library System';
+  }
+}
 
     var toggleBtn = document.getElementById('togglePass');
     var passwordInput = document.getElementById('password');
