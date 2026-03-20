@@ -2,4 +2,5 @@
 
 - Email: jcesperanza@neu.edu.ph
 - Password: 12345678
-- project-h9kz.vercel.app
+- project-mid-lovat.vercel.app
+
