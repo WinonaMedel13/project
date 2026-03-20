@@ -7,165 +7,191 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --orange: #E08134;
-  --white: #FFFFFF;
-  --navy: #334796;
-  --cream: #FFEABD;
-  --navy-dark: #1e2d63;
-  --orange-dark: #c06820;
-}
 
-html, body {
-  height: 100%;
-  font-family: 'Outfit', sans-serif;
-  overflow: hidden;
-}
+    :root {
+      --orange: #E08134;
+      --white: #FFFFFF;
+      --navy: #334796;
+      --cream: #FFEABD;
+      --navy-dark: #1e2d63;
+      --orange-dark: #c06820;
+    }
 
-.bg-layer {
-  position: fixed; inset: 0;
-  background: url('https://smapse.com/storage/2020/05/converted/825_585_6-51.jpg') center/cover no-repeat;
-  z-index: 0;
-}
-.bg-overlay {
-  position: fixed; inset: 0;
-  background: linear-gradient(135deg, rgba(51,71,150,0.82) 0%, rgba(20,30,80,0.75) 50%, rgba(224,129,52,0.45) 100%);
-  z-index: 1;
-}
-.bg-grain {
-  position: fixed; inset: 0;
-  z-index: 2;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-}
+    html, body {
+      height: 100%;
+      font-family: 'Outfit', sans-serif;
+      overflow: hidden;
+    }
 
-.shape {
-  position: fixed;
-  border-radius: 50%;
-  z-index: 2;
-  animation: floatShape 8s ease-in-out infinite;
-}
-.shape-1 { width:320px; height:320px; top:-80px; right:-80px; background:radial-gradient(circle,rgba(224,129,52,0.25) 0%,transparent 70%); }
-.shape-2 { width:240px; height:240px; bottom:-60px; left:-60px; background:radial-gradient(circle,rgba(255,234,189,0.15) 0%,transparent 70%); animation-delay:-3s; }
-.shape-3 { width:180px; height:180px; top:40%; left:5%; background:radial-gradient(circle,rgba(51,71,150,0.3) 0%,transparent 70%); animation-delay:-6s; }
-@keyframes floatShape {
-  0%,100% { transform: translateY(0px) scale(1); }
-  50% { transform: translateY(-20px) scale(1.05); }
-}
+    .bg-layer {
+      position: fixed; inset: 0;
+      background: url('https://smapse.com/storage/2020/05/converted/825_585_6-51.jpg') center/cover no-repeat;
+      z-index: 0;
+    }
+    .bg-overlay {
+      position: fixed; inset: 0;
+      background: linear-gradient(135deg, rgba(51,71,150,0.82) 0%, rgba(20,30,80,0.75) 50%, rgba(224,129,52,0.45) 100%);
+      z-index: 1;
+    }
+    .bg-grain {
+      position: fixed; inset: 0;
+      z-index: 2;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
 
-.page-wrapper {
-  position: relative;
-  z-index: 10;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
+    .shape {
+      position: fixed;
+      border-radius: 50%;
+      z-index: 2;
+      animation: floatShape 8s ease-in-out infinite;
+    }
+    .shape-1 { width:320px; height:320px; top:-80px; right:-80px; background:radial-gradient(circle,rgba(224,129,52,0.25) 0%,transparent 70%); }
+    .shape-2 { width:240px; height:240px; bottom:-60px; left:-60px; background:radial-gradient(circle,rgba(255,234,189,0.15) 0%,transparent 70%); animation-delay:-3s; }
+    .shape-3 { width:180px; height:180px; top:40%; left:5%; background:radial-gradient(circle,rgba(51,71,150,0.3) 0%,transparent 70%); animation-delay:-6s; }
+    @keyframes floatShape {
+      0%,100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-20px) scale(1.05); }
+    }
 
-.card {
-  width: 100%;
-  max-width: 460px;
-  background: rgba(255,255,255,0.07);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 24px;
-  padding: 48px 44px 40px;
-  box-shadow: 0 32px 80px rgba(10,15,50,0.55), 0 4px 24px rgba(224,129,52,0.12), inset 0 1px 0 rgba(255,255,255,0.2);
-  animation: cardReveal 0.9s cubic-bezier(0.22,1,0.36,1) both;
-}
-@keyframes cardReveal {
-  from { opacity:0; transform:translateY(36px) scale(0.97); }
-  to   { opacity:1; transform:translateY(0) scale(1); }
-}
+    .page-wrapper {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-.logo-area {
-  text-align: center;
-  margin-bottom: 32px;
-  animation: fadeUp 0.8s 0.15s cubic-bezier(0.22,1,0.36,1) both;
-}
-.logo-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 70px; height: 70px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
-  border: 2px solid rgba(224,129,52,0.5);
-  box-shadow: 0 8px 32px rgba(51,71,150,0.45), 0 0 0 6px rgba(255,234,189,0.08);
-  margin-bottom: 16px;
-}
-.logo-badge svg { width:36px; height:36px; }
-.brand-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--white);
-  letter-spacing: -0.5px;
-}
-.brand-title span { color: var(--orange); }
-.brand-subtitle {
-  margin-top: 6px;
-  font-size: 12px;
-  font-weight: 500;
-  color: rgba(255,234,189,0.7);
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-}
+    .card {
+      width: 100%;
+      max-width: 460px;
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 24px;
+      padding: 48px 44px 40px;
+      box-shadow: 0 32px 80px rgba(10,15,50,0.55), 0 4px 24px rgba(224,129,52,0.12), inset 0 1px 0 rgba(255,255,255,0.2);
+      animation: cardReveal 0.9s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes cardReveal {
+      from { opacity:0; transform:translateY(36px) scale(0.97); }
+      to   { opacity:1; transform:translateY(0) scale(1); }
+    }
 
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 28px;
-}
-.divider-line {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-}
-.divider-text {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(255,234,189,0.5);
-}
+    .logo-area {
+      text-align: center;
+      margin-bottom: 32px;
+      animation: fadeUp 0.8s 0.15s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    .logo-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 70px; height: 70px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+      border: 2px solid rgba(224,129,52,0.5);
+      box-shadow: 0 8px 32px rgba(51,71,150,0.45), 0 0 0 6px rgba(255,234,189,0.08);
+      margin-bottom: 16px;
+    }
+    .logo-badge svg { width:36px; height:36px; }
+    .brand-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.5px;
+    }
+    .brand-title span { color: var(--orange); }
+    .brand-subtitle {
+      margin-top: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,234,189,0.7);
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
 
-.form-group {
-  margin-bottom: 18px;
-  animation: fadeUp 0.7s both;
-}
-.form-group:nth-child(1) { animation-delay: 0.25s; }
-.form-group:nth-child(2) { animation-delay: 0.35s; }
-.form-group:nth-child(3) { animation-delay: 0.45s; } /* 👈 ADD THIS */
-label {
-  display: block;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 1.8px;
-  text-transform: uppercase;
-  color: rgba(255,234,189,0.85);
-  margin-bottom: 8px;
-}
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    }
+    .divider-text {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,234,189,0.5);
+    }
 
-.input-wrap { position: relative; }
-.input-icon {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px; height: 18px;
-  color: rgba(255,255,255,0.4);
-  pointer-events: none;
-  transition: color 0.3s;
-}
-.input-wrap:focus-within .input-icon { color: var(--orange); }
+    .form-group {
+      margin-bottom: 18px;
+      animation: fadeUp 0.7s both;
+    }
+    .form-group:nth-child(1) { animation-delay: 0.25s; }
+    .form-group:nth-child(2) { animation-delay: 0.35s; }
+    .form-group:nth-child(3) { animation-delay: 0.45s; } /* 👈 ADD THIS */
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: rgba(255,234,189,0.85);
+      margin-bottom: 8px;
+    }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
+    .input-wrap { position: relative; }
+    .input-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px; height: 18px;
+      color: rgba(255,255,255,0.4);
+      pointer-events: none;
+      transition: color 0.3s;
+    }
+    .input-wrap:focus-within .input-icon { color: var(--orange); }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 14px 16px 14px 46px;
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14.5px;
+      font-weight: 400;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+    }
+    input[type="text"]::placeholder,
+    input[type="email"]::placeholder,
+    input[type="password"]::placeholder { color: rgba(255,255,255,0.3); }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: var(--orange);
+      background: rgba(255,255,255,0.12);
+      box-shadow: 0 0 0 4px rgba(224,129,52,0.15);
+    }
+
+    /* SELECT STYLES 👇 ADD THIS WHOLE BLOCK */
+select {
   width: 100%;
   padding: 14px 16px 14px 46px;
   background: rgba(255,255,255,0.08);
@@ -177,371 +203,331 @@ input[type="password"] {
   color: var(--white);
   outline: none;
   transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ffffff40'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 18px;
 }
-input[type="text"]::placeholder,
-input[type="email"]::placeholder,
-input[type="password"]::placeholder { color: rgba(255,255,255,0.3); }
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus {
+select:focus {
   border-color: var(--orange);
   background: rgba(255,255,255,0.12);
   box-shadow: 0 0 0 4px rgba(224,129,52,0.15);
 }
-/* 👈 PUT IT HERE - ADD THE FIX */
-.input-icon.lock {
-  top: 48%;
-  transform: translateY(-48%);
-}
-/* SELECT STYLES 👇 ADD THIS WHOLE BLOCK */
-
-select {
-width: 100%;
-padding: 14px 16px 14px 46px;
-background: rgba(255,255,255,0.08);
-border: 1.5px solid rgba(255,255,255,0.15);
-border-radius: 12px;
-font-family: 'Outfit', sans-serif;
-font-size: 14.5px;
-font-weight: 400;
-color: var(--white);
-outline: none;
-transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
-appearance: none;
-background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ffffff40'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
-background-repeat: no-repeat;
-background-position: right 16px center;
-background-size: 18px;
-}
-select:focus {
-border-color: var(--orange);
-background: rgba(255,255,255,0.12);
-box-shadow: 0 0 0 4px rgba(224,129,52,0.15);
-}
 select option { color: #333; background: white; }
 /* SELECT STYLES 👆 END */
 
+## **3. REMOVE** the select styles from inside your `@media (max-width:480px)` section.
 
-3. REMOVE the select styles from inside your @media (max-width:480px) section.
+**That's it!** 10-second fix, no full rewrite needed.
 
-That's it! 10-second fix, no full rewrite needed.
-
-
-Exact spots:
-
-
-
-Line ~140: Add nth-child(3)
-
-Line ~250: Add select styles block
-
-Line ~450: Delete select styles from media query
-
+**Exact spots:**
+- **Line ~140:** Add `nth-child(3)`
+- **Line ~250:** Add select styles block  
+- **Line ~450:** Delete select styles from media query
 
 Your dropdown will look perfect on all devices! 🎨
 
+    .toggle-pass {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(255,255,255,0.35);
+      display: flex;
+      align-items: center;
+      padding: 4px;
+      transition: color 0.3s;
+    }
+    .toggle-pass:hover { color: var(--cream); }
 
-.toggle-pass {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: rgba(255,255,255,0.35);
-  display: flex;
-  align-items: center;
-  padding: 4px;
-  transition: color 0.3s;
-}
-.toggle-pass:hover { color: var(--cream); }
+    .forgot-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: -8px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.7s 0.4s both;
+    }
+    .link-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: rgba(255,234,189,0.75);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(255,234,189,0.3);
+      transition: color 0.3s, text-decoration-color 0.3s;
+    }
+    .link-btn:hover { color: var(--cream); text-decoration-color: var(--cream); }
 
-.forgot-row {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: -8px;
-  margin-bottom: 24px;
-  animation: fadeUp 0.7s 0.4s both;
-}
-.link-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: 'Outfit', sans-serif;
-  font-size: 12.5px;
-  font-weight: 500;
-  color: rgba(255,234,189,0.75);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-color: rgba(255,234,189,0.3);
-  transition: color 0.3s, text-decoration-color 0.3s;
-}
-.link-btn:hover { color: var(--cream); text-decoration-color: var(--cream); }
+    .btn-primary {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+      border: none;
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.3s, opacity 0.2s;
+      box-shadow: 0 6px 24px rgba(224,129,52,0.45);
+      animation: fadeUp 0.7s 0.5s both;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    .btn-primary:hover::before { left: 100%; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(224,129,52,0.6); }
+    .btn-primary:disabled { opacity: .6; cursor: not-allowed; transform: none; }
 
-.btn-primary {
+    .or-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 22px 0;
+      animation: fadeUp 0.7s 0.58s both;
+    }
+    .or-line { flex:1; height:1px; background:rgba(255,255,255,0.12); }
+    .or-label { font-size:11.5px; font-weight:500; color:rgba(255,255,255,0.4); letter-spacing:1px; }
+
+    .btn-google {
+      width: 100%;
+      padding: 13px;
+      background: rgba(255,255,255,0.09);
+      border: 1.5px solid rgba(255,255,255,0.18);
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--white);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: background 0.3s, border-color 0.3s, transform 0.2s;
+      animation: fadeUp 0.7s 0.65s both;
+    }
+    .btn-google:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.3);
+      transform: translateY(-1px);
+    }
+
+    .register-row {
+      text-align: center;
+      margin-top: 26px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      animation: fadeUp 0.7s 0.72s both;
+    }
+    .register-row .link-btn {
+      font-size: 13px;
+      color: var(--cream);
+      font-weight: 600;
+      text-decoration-color: rgba(255,234,189,0.5);
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10,18,60,0.7);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s;
+      padding: 20px;
+    }
+    .modal-overlay.active { opacity:1; pointer-events:all; }
+    .modal {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      background: linear-gradient(145deg, rgba(30,45,110,0.97) 0%, rgba(20,30,70,0.97) 100%);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 40px 36px 36px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+      transform: scale(0.95) translateY(16px);
+      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+    }
+    .modal-overlay.active .modal { transform: scale(1) translateY(0); }
+    .modal-title { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--white); margin-bottom:6px; }
+    .modal-desc { font-size:13px; color:rgba(255,234,189,0.6); margin-bottom:26px; line-height:1.6; }
+    .modal-close {
+      position: absolute;
+      top: 14px; right: 16px;
+      background: none; border: none;
+      cursor: pointer;
+      color: rgba(255,255,255,0.4);
+      font-size: 22px;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: var(--white); }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 13px;
+      background: var(--navy);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--white);
+      cursor: pointer;
+      margin-top: 12px;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-secondary:hover { background: var(--navy-dark); transform: translateY(-1px); }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: linear-gradient(135deg, #1e2d63, #2a3d7a);
+      border: 1px solid rgba(224,129,52,0.4);
+      border-radius: 12px;
+      padding: 14px 24px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--cream);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+      z-index: 200;
+      transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+      white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(18px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    @media (max-width:480px) {
+      .card { padding: 36px 28px 32px; }
+      .brand-title { font-size: 24px; }
+
+      select {
   width: 100%;
-  padding: 15px;
-  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
-  border: none;
-  border-radius: 12px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--white);
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.3s, opacity 0.2s;
-  box-shadow: 0 6px 24px rgba(224,129,52,0.45);
-  animation: fadeUp 0.7s 0.5s both;
-}
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%;
-  width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transition: left 0.5s;
-}
-.btn-primary:hover::before { left: 100%; }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(224,129,52,0.6); }
-.btn-primary:disabled { opacity: .6; cursor: not-allowed; transform: none; }
-
-.or-divider {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 22px 0;
-  animation: fadeUp 0.7s 0.58s both;
-}
-.or-line { flex:1; height:1px; background:rgba(255,255,255,0.12); }
-.or-label { font-size:11.5px; font-weight:500; color:rgba(255,255,255,0.4); letter-spacing:1px; }
-
-.btn-google {
-  width: 100%;
-  padding: 13px;
-  background: rgba(255,255,255,0.09);
-  border: 1.5px solid rgba(255,255,255,0.18);
-  border-radius: 12px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--white);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: background 0.3s, border-color 0.3s, transform 0.2s;
-  animation: fadeUp 0.7s 0.65s both;
-}
-.btn-google:hover {
-  background: rgba(255,255,255,0.15);
-  border-color: rgba(255,255,255,0.3);
-  transform: translateY(-1px);
-}
-
-.register-row {
-  text-align: center;
-  margin-top: 26px;
-  font-size: 13px;
-  color: rgba(255,255,255,0.5);
-  animation: fadeUp 0.7s 0.72s both;
-}
-.register-row .link-btn {
-  font-size: 13px;
-  color: var(--cream);
-  font-weight: 600;
-  text-decoration-color: rgba(255,234,189,0.5);
-}
-
-/* MODAL */
-.modal-overlay {
-  position: fixed; inset: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(10,18,60,0.7);
-  backdrop-filter: blur(8px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.35s;
-  padding: 20px;
-}
-.modal-overlay.active { opacity:1; pointer-events:all; }
-.modal {
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-  background: linear-gradient(145deg, rgba(30,45,110,0.97) 0%, rgba(20,30,70,0.97) 100%);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 20px;
-  padding: 40px 36px 36px;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.5);
-  transform: scale(0.95) translateY(16px);
-  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
-}
-.modal-overlay.active .modal { transform: scale(1) translateY(0); }
-.modal-title { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--white); margin-bottom:6px; }
-.modal-desc { font-size:13px; color:rgba(255,234,189,0.6); margin-bottom:26px; line-height:1.6; }
-.modal-close {
-  position: absolute;
-  top: 14px; right: 16px;
-  background: none; border: none;
-  cursor: pointer;
-  color: rgba(255,255,255,0.4);
-  font-size: 22px;
-  line-height: 1;
-  transition: color 0.2s;
-}
-.modal-close:hover { color: var(--white); }
-
-.btn-secondary {
-  width: 100%;
-  padding: 13px;
-  background: var(--navy);
+  padding: 14px 16px 14px 46px;
+  background: rgba(255,255,255,0.08);
   border: 1.5px solid rgba(255,255,255,0.15);
   border-radius: 12px;
   font-family: 'Outfit', sans-serif;
   font-size: 14.5px;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--white);
-  cursor: pointer;
-  margin-top: 12px;
-  transition: background 0.3s, transform 0.2s;
-}
-.btn-secondary:hover { background: var(--navy-dark); transform: translateY(-1px); }
-
-/* TOAST */
-.toast {
-  position: fixed;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%) translateY(80px);
-  background: linear-gradient(135deg, #1e2d63, #2a3d7a);
-  border: 1px solid rgba(224,129,52,0.4);
-  border-radius: 12px;
-  padding: 14px 24px;
-  font-size: 13.5px;
-  font-weight: 500;
-  color: var(--cream);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-  z-index: 200;
-  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
-  white-space: nowrap;
-}
-.toast.show { transform: translateX(-50%) translateY(0); }
-
-@keyframes fadeUp {
-  from { opacity:0; transform:translateY(18px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-
-@media (max-width:480px) {
-  .card { padding: 36px 28px 32px; }
-  .brand-title { font-size: 24px; }
-
-  select {
-
-width: 100%;
-padding: 14px 16px 14px 46px;
-background: rgba(255,255,255,0.08);
-border: 1.5px solid rgba(255,255,255,0.15);
-border-radius: 12px;
-font-family: 'Outfit', sans-serif;
-font-size: 14.5px;
-font-weight: 400;
-color: var(--white);
-outline: none;
-transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
-appearance: none;
-background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ffffff40'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
-background-repeat: no-repeat;
-background-position: right 16px center;
-background-size: 18px;
+  outline: none;
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ffffff40'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 18px;
 }
 select:focus {
-border-color: var(--orange);
-background: rgba(255,255,255,0.12);
-box-shadow: 0 0 0 4px rgba(224,129,52,0.15);
+  border-color: var(--orange);
+  background: rgba(255,255,255,0.12);
+  box-shadow: 0 0 0 4px rgba(224,129,52,0.15);
 }
-select option {
-color: #333;
-background: white;
+select option { 
+  color: #333; 
+  background: white; 
 }
 select::placeholder { color: rgba(255,255,255,0.3); }
-}
-</style>
-
-
+    }
+  </style>
 </head>
 <body>
+
   <div class="bg-layer"></div>
   <div class="bg-overlay"></div>
   <div class="bg-grain"></div>
   <div class="shape shape-1"></div>
   <div class="shape shape-2"></div>
   <div class="shape shape-3"></div>
+
   <div class="page-wrapper">
     <div class="card">
-  <div class="logo-area">
-    <div class="logo-badge">
-      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="5" width="16" height="22" rx="2" fill="none" stroke="#FFEABD" stroke-width="1.8"/>
-        <rect x="14" y="5" width="16" height="22" rx="2" fill="none" stroke="#E08134" stroke-width="1.8"/>
-        <line x1="9" y1="11" x2="19" y2="11" stroke="#FFEABD" stroke-width="1.4" stroke-linecap="round"/>
-        <line x1="9" y1="15" x2="19" y2="15" stroke="#FFEABD" stroke-width="1.4" stroke-linecap="round"/>
-        <line x1="9" y1="19" x2="15" y2="19" stroke="#FFEABD" stroke-width="1.4" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <div class="brand-title">NEU <span>Library</span></div>
-    <div class="brand-subtitle">Visitor Log System</div>
-  </div>
 
-  <div class="divider">
-    <div class="divider-line"></div>
-    <div class="divider-text">Sign In</div>
-    <div class="divider-line"></div>
-  </div>
-
-  <form id="loginForm" onsubmit="handleLogin(event)" autocomplete="off">
-
-    <div class="form-group">
-      <label for="email">Email Address</label>
-      <div class="input-wrap">
-        <svg class="input-icon lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-          <polyline points="22,6 12,13 2,6"/>
-        </svg>
-        <input type="email" id="email" placeholder="youremail@neu.edu.ph" required />
+      <div class="logo-area">
+        <div class="logo-badge">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="5" width="16" height="22" rx="2" fill="none" stroke="#FFEABD" stroke-width="1.8"/>
+            <rect x="14" y="5" width="16" height="22" rx="2" fill="none" stroke="#E08134" stroke-width="1.8"/>
+            <line x1="9" y1="11" x2="19" y2="11" stroke="#FFEABD" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="9" y1="15" x2="19" y2="15" stroke="#FFEABD" stroke-width="1.4" stroke-linecap="round"/>
+            <line x1="9" y1="19" x2="15" y2="19" stroke="#FFEABD" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="brand-title">NEU <span>Library</span></div>
+        <div class="brand-subtitle">Visitor Log System</div>
       </div>
-    </div>
 
-    <div class="form-group">
-  <label for="password">Password</label>
-  <div class="input-wrap">
-    <svg class="input-icon **lock**" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-    </svg>
-    <input type="password" id="password" placeholder="Enter your password" required />
-    <button type="button" class="toggle-pass" id="togglePass" aria-label="Toggle password visibility">
-      <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18">
-        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-        <circle cx="12" cy="12" r="3"/>
-      </svg>
-    </button>
-  </div>
-</div>
-  <!-- 👈 ADD THIS NEW FORM-GROUP (after password field) -->
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-text">Sign In</div>
+        <div class="divider-line"></div>
+      </div>
 
+      <form id="loginForm" onsubmit="handleLogin(event)" autocomplete="off">
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <div class="input-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <input type="email" id="email" placeholder="youremail@neu.edu.ph" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <input type="password" id="password" placeholder="Enter your password" required />
+            <button type="button" class="toggle-pass" id="togglePass" aria-label="Toggle password visibility">
+              <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      <!-- 👈 ADD THIS NEW FORM-GROUP (after password field) -->
 <div class="form-group" style="animation-delay: 0.45s;">
   <label for="purposeVisit">Purpose of Visit <span style="color:#E08134">*</span></label>
   <div class="input-wrap">
-    <svg class="input-icon lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
       <circle cx="12" cy="12" r="10"></circle>
       <line x1="15" y1="9" x2="9" y2="15"></line>
       <line x1="9" y1="9" x2="15" y2="15"></line>
@@ -563,37 +549,38 @@ select::placeholder { color: rgba(255,255,255,0.3); }
         <div class="forgot-row">
           <button type="button" class="link-btn" onclick="openModal('forgotModal')">Forgot password?</button>
         </div>
-    <button type="submit" class="btn-primary" id="loginBtn">Sign In to Library System</button>
 
-  </form>
+        <button type="submit" class="btn-primary" id="loginBtn">Sign In to Library System</button>
 
-  <div class="or-divider">
-    <div class="or-line"></div>
-    <span class="or-label">or continue with</span>
-    <div class="or-line"></div>
+      </form>
+
+      <div class="or-divider">
+        <div class="or-line"></div>
+        <span class="or-label">or continue with</span>
+        <div class="or-line"></div>
+      </div>
+
+      <button class="btn-google" onclick="handleGoogleLogin()">
+        <svg width="18" height="18" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          <path fill="none" d="M0 0h48v48H0z"/>
+        </svg>
+        Sign in with Google Account
+      </button>
+
+      <div class="register-row">
+        No account yet?&nbsp;
+        <button type="button" class="link-btn" onclick="window.location.href='neureg.html'">
+          Create a new account
+        </button>
+      </div>
+
+    </div>
   </div>
 
-  <button class="btn-google" onclick="handleGoogleLogin()">
-    <svg width="18" height="18" viewBox="0 0 48 48">
-      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-      <path fill="none" d="M0 0h48v48H0z"/>
-    </svg>
-    Sign in with Google Account
-  </button>
-
-  <div class="register-row">
-    No account yet?&nbsp;
-    <button type="button" class="link-btn" onclick="window.location.href='neureg.html'">
-      Create a new account
-    </button>
-  </div>
-
-</div>
-
-  </div>
   <!-- FORGOT PASSWORD MODAL -->
   <div class="modal-overlay" id="forgotModal">
     <div class="modal">
@@ -604,7 +591,7 @@ select::placeholder { color: rgba(255,255,255,0.3); }
         <div class="form-group" style="margin-bottom:20px;">
           <label for="resetEmail">Institutional Email</label>
           <div class="input-wrap">
-            <svg class="input-icon lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
               <polyline points="22,6 12,13 2,6"/>
             </svg>
@@ -616,9 +603,12 @@ select::placeholder { color: rgba(255,255,255,0.3); }
       </form>
     </div>
   </div>
+
   <div class="toast" id="toast"></div>
+
 <!-- Supabase CDN -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
   // ✅ FIXED SUPABASE INIT (no duplicate)
   const SUPABASE_URL = 'https://wfpqbyfgjserwlynstcx.supabase.co';
@@ -734,13 +724,12 @@ select::placeholder { color: rgba(255,255,255,0.3); }
 
   // ADD THIS AT THE VERY END of <script> (before </script>)
 function logout() {
-localStorage.removeItem('neuLibrarySession');
-showToast('Logged out successfully');
-setTimeout(() => {
-window.location.href = 'index.html';
-}, 800);
+  localStorage.removeItem('neuLibrarySession');
+  showToast('Logged out successfully');
+  setTimeout(() => {
+    window.location.href = 'index.html';
+  }, 800);
 }
-
 
 </script>
 </body>
