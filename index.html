@@ -22,24 +22,13 @@
     html, body {
       height: 100%;
       font-family: 'Outfit', sans-serif;
-      /* CHANGED: removed overflow:hidden so the page can scroll */
       overflow: auto;
     }
 
-    /* ADDED: styled scrollbar to match the theme */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(20, 30, 80, 0.6);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(224, 129, 52, 0.6);
-      border-radius: 8px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(224, 129, 52, 0.9);
-    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: rgba(20, 30, 80, 0.6); }
+    ::-webkit-scrollbar-thumb { background: rgba(224, 129, 52, 0.6); border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(224, 129, 52, 0.9); }
 
     .bg-layer {
       position: fixed; inset: 0;
@@ -79,7 +68,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      /* CHANGED: allow vertical scroll if content is taller than screen */
       padding: 40px 20px;
     }
 
@@ -343,6 +331,16 @@
       border-color: rgba(255,255,255,0.3);
       transform: translateY(-1px);
     }
+    .btn-google:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* Google purpose modal */
+    .google-purpose-note {
+      font-size: 12px;
+      color: rgba(255,234,189,0.6);
+      text-align: center;
+      margin-top: 8px;
+      animation: fadeUp 0.7s 0.72s both;
+    }
 
     .register-row {
       text-align: center;
@@ -545,7 +543,7 @@
         <div class="or-line"></div>
       </div>
 
-      <button class="btn-google" onclick="handleGoogleLogin()">
+      <button class="btn-google" id="googleBtn" onclick="handleGoogleLogin()">
         <svg width="18" height="18" viewBox="0 0 48 48">
           <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
           <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
@@ -555,6 +553,8 @@
         </svg>
         Sign in with Google Account
       </button>
+
+      <p class="google-purpose-note">You'll choose your visit purpose after Google sign-in.</p>
 
       <div class="register-row">
         No account yet?&nbsp;
@@ -589,9 +589,41 @@
     </div>
   </div>
 
+  <!-- GOOGLE PURPOSE MODAL — shown after Google OAuth callback -->
+  <div class="modal-overlay" id="googlePurposeModal">
+    <div class="modal">
+      <div class="modal-title">Almost there! 👋</div>
+      <div class="modal-desc">Welcome! Please select your purpose of visit to complete sign-in.</div>
+      <form onsubmit="completeGoogleLogin(event)">
+        <div class="form-group" style="margin-bottom:20px;">
+          <label for="googlePurpose">Purpose of Visit <span style="color:#E08134">*</span></label>
+          <div class="input-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+              <circle cx="12" cy="9" r="2.5"/>
+            </svg>
+            <select id="googlePurpose" required>
+              <option value="">Select purpose of your visit...</option>
+              <option value="Library Research">📚 Library Research</option>
+              <option value="Book Borrowing">📖 Book Borrowing</option>
+              <option value="Group Study">👥 Group Study</option>
+              <option value="Computer Use">💻 Computer Use</option>
+              <option value="Printing/Photocopying">🖨️ Printing/Photocopying</option>
+              <option value="Consult Librarian">🧑‍🏫 Consult Librarian</option>
+              <option value="Thesis Research">🎓 Thesis Research</option>
+              <option value="Exam Review">📝 Exam Review</option>
+              <option value="Other">❓ Other</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary" id="googlePurposeBtn" style="animation:none;">Continue to Library</button>
+      </form>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
 
-  <!-- Supabase CDN — jsdelivr only, no skypack -->
+  <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
@@ -600,6 +632,7 @@
 
     var client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    // ─── Toast ────────────────────────────────────────────────────────────────
     var toastTimer;
     function showToast(message) {
       var toast = document.getElementById('toast');
@@ -609,6 +642,31 @@
       toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 3200);
     }
 
+    // ─── Modal helpers ────────────────────────────────────────────────────────
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('active');
+      });
+    });
+
+    // ─── Password toggle ──────────────────────────────────────────────────────
+    var toggleBtn = document.getElementById('togglePass');
+    var passwordInput = document.getElementById('password');
+    var eyeIcon = document.getElementById('eyeIcon');
+    var passVisible = false;
+
+    toggleBtn.addEventListener('click', function() {
+      passVisible = !passVisible;
+      passwordInput.type = passVisible ? 'text' : 'password';
+      eyeIcon.innerHTML = passVisible
+        ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>'
+        : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+    });
+
+    // ─── Email / Password Login ───────────────────────────────────────────────
     async function handleLogin(e) {
       e.preventDefault();
 
@@ -617,7 +675,7 @@
       var pass = document.getElementById('password').value;
       var loginBtn = document.getElementById('loginBtn');
 
-      if (!purpose || purpose === '') {
+      if (!purpose) {
         showToast('Please select your purpose of visit');
         return;
       }
@@ -644,13 +702,10 @@
           return;
         }
 
-        var updateResult = await client
+        await client
           .from('visitor_logs')
           .update({ purpose_of_visit: purpose })
           .eq('id', data.id);
-
-        console.log('Purpose saved:', purpose);
-        console.log('Update result:', updateResult);
 
         var isAdmin = data.email === 'spokeWasHere@gmail.com' || data.email === 'jcesperanza@neu.edu.ph';
         var userData = {
@@ -667,11 +722,7 @@
         showToast('Welcome ' + userData.fullName + '!');
 
         setTimeout(function() {
-          if (userData.isAdmin) {
-            window.location.href = 'admin-dashboard.html';
-          } else {
-            window.location.href = 'neulib.html';
-          }
+          window.location.href = userData.isAdmin ? 'admin-dashboard.html' : 'neulib.html';
         }, 1200);
 
       } catch (err) {
@@ -683,45 +734,160 @@
       }
     }
 
-    var toggleBtn = document.getElementById('togglePass');
-    var passwordInput = document.getElementById('password');
-    var eyeIcon = document.getElementById('eyeIcon');
-    var passVisible = false;
-
-    toggleBtn.addEventListener('click', function() {
-      passVisible = !passVisible;
-      passwordInput.type = passVisible ? 'text' : 'password';
-      eyeIcon.innerHTML = passVisible
-        ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>'
-        : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
-    });
-
-    function openModal(id) { document.getElementById(id).classList.add('active'); }
-    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-    document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
-      overlay.addEventListener('click', function(e) {
-        if (e.target === this) this.classList.remove('active');
-      });
-    });
-
+    // ─── Google OAuth Login ───────────────────────────────────────────────────
     async function handleGoogleLogin() {
-      showToast('Use email/password login for now');
+      var googleBtn = document.getElementById('googleBtn');
+      googleBtn.disabled = true;
+      googleBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Redirecting...';
+      showToast('Redirecting to Google...');
+
+      try {
+        var redirectTo = window.location.origin + window.location.pathname;
+        var result = await client.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: redirectTo,
+            queryParams: {
+              access_type: 'offline',
+              prompt: 'select_account'
+            }
+          }
+        });
+
+        if (result.error) {
+          showToast('Google sign-in failed: ' + result.error.message);
+          googleBtn.disabled = false;
+          googleBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg> Sign in with Google Account';
+        }
+        // If no error, Supabase redirects the browser automatically.
+      } catch (err) {
+        showToast('Google sign-in error. Try again.');
+        console.error('Google OAuth error:', err);
+        googleBtn.disabled = false;
+      }
     }
 
+    // ─── Handle OAuth callback (runs on page load after Google redirects back) ─
+    async function handleOAuthCallback() {
+      // Supabase writes the session into the URL hash (#access_token=...) or
+      // uses PKCE and stores it automatically. Either way, getSession() works.
+      var sessionResult = await client.auth.getSession();
+      var session = sessionResult.data && sessionResult.data.session;
+
+      if (!session) return; // Normal page load, not a callback.
+
+      var user = session.user;
+
+      // Check if this Google user already has a visitor_logs row.
+      var existing = await client
+        .from('visitor_logs')
+        .select('*')
+        .eq('email', user.email)
+        .maybeSingle();
+
+      if (existing.error) {
+        console.error('DB lookup error:', existing.error);
+      }
+
+      var data = existing.data;
+
+      if (!data) {
+        // First-time Google user — create a visitor_logs row for them.
+        var nameParts = (user.user_metadata.full_name || user.email.split('@')[0]).split(' ');
+        var firstName = nameParts[0] || '';
+        var lastName = nameParts.slice(1).join(' ') || '';
+
+        var inserted = await client
+          .from('visitor_logs')
+          .insert({
+            email: user.email,
+            full_name: user.user_metadata.full_name || user.email.split('@')[0],
+            first_name: firstName,
+            last_name: lastName,
+            school_id: '',
+            password: '',
+            auth_provider: 'google'
+          })
+          .select()
+          .single();
+
+        if (inserted.error) {
+          console.error('Failed to create visitor row:', inserted.error);
+          showToast('Account setup failed. Contact admin.');
+          return;
+        }
+        data = inserted.data;
+      }
+
+      // Show purpose modal before proceeding.
+      window._googleUserData = data;
+      window._googleUser = user;
+      openModal('googlePurposeModal');
+    }
+
+    // ─── Complete Google login after purpose selected ─────────────────────────
+    async function completeGoogleLogin(e) {
+      e.preventDefault();
+
+      var purpose = document.getElementById('googlePurpose').value;
+      if (!purpose) {
+        showToast('Please select your purpose of visit');
+        return;
+      }
+
+      var btn = document.getElementById('googlePurposeBtn');
+      btn.disabled = true;
+      btn.textContent = 'Loading...';
+
+      var data = window._googleUserData;
+      var user = window._googleUser;
+
+      // Save purpose of visit
+      await client
+        .from('visitor_logs')
+        .update({ purpose_of_visit: purpose })
+        .eq('id', data.id);
+
+      var isAdmin = data.email === 'spokeWasHere@gmail.com' || data.email === 'jcesperanza@neu.edu.ph';
+      var userData = {
+        id: data.id,
+        email: data.email,
+        fullName: data.full_name || user.user_metadata.full_name || data.email.split('@')[0],
+        schoolId: data.school_id || '',
+        purposeOfVisit: purpose,
+        isAdmin: isAdmin,
+        role: isAdmin ? 'admin' : 'user',
+        authProvider: 'google'
+      };
+
+      localStorage.setItem('neuLibrarySession', JSON.stringify(userData));
+      closeModal('googlePurposeModal');
+      showToast('Welcome ' + userData.fullName + '!');
+
+      setTimeout(function() {
+        window.location.href = userData.isAdmin ? 'admin-dashboard.html' : 'neulib.html';
+      }, 1200);
+    }
+
+    // ─── Forgot Password ──────────────────────────────────────────────────────
     async function handleForgotPassword(e) {
       e.preventDefault();
       showToast('Contact admin for password reset');
       closeModal('forgotModal');
     }
 
+    // ─── Logout helper ────────────────────────────────────────────────────────
     function logout() {
+      client.auth.signOut();
       localStorage.removeItem('neuLibrarySession');
       showToast('Logged out successfully');
       setTimeout(function() {
         window.location.href = 'index.html';
       }, 800);
     }
+
+    // ─── Run OAuth callback handler on page load ──────────────────────────────
+    handleOAuthCallback();
   </script>
 </body>
 </html>
