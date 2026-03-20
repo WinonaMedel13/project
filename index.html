@@ -140,6 +140,7 @@
     }
     .form-group:nth-child(1) { animation-delay: 0.25s; }
     .form-group:nth-child(2) { animation-delay: 0.35s; }
+    .form-group:nth-child(3) { animation-delay: 0.45s; }
 
     label {
       display: block;
@@ -151,16 +152,23 @@
       margin-bottom: 8px;
     }
 
-    .input-wrap { position: relative; }
+    /* FIX: input-wrap uses flex so the icon is always truly centered */
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
     .input-icon {
       position: absolute;
       left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 18px; height: 18px;
+      width: 18px;
+      height: 18px;
       color: rgba(255,255,255,0.4);
       pointer-events: none;
       transition: color 0.3s;
+      /* Remove top/transform — flex on parent keeps it centered */
+      flex-shrink: 0;
     }
     .input-wrap:focus-within .input-icon { color: var(--orange); }
 
@@ -190,11 +198,41 @@
       box-shadow: 0 0 0 4px rgba(224,129,52,0.15);
     }
 
+    /* Password input needs right padding so text doesn't go under the eye button */
+    input[type="password"] {
+      padding-right: 46px;
+    }
+
+    select {
+      width: 100%;
+      padding: 14px 46px 14px 46px;
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14.5px;
+      font-weight: 400;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ffffff40'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-size: 18px;
+      cursor: pointer;
+    }
+    select:focus {
+      border-color: var(--orange);
+      background-color: rgba(255,255,255,0.12);
+      box-shadow: 0 0 0 4px rgba(224,129,52,0.15);
+    }
+    select option { color: #333; background: white; }
+
     .toggle-pass {
       position: absolute;
       right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
       background: none;
       border: none;
       cursor: pointer;
@@ -203,6 +241,7 @@
       align-items: center;
       padding: 4px;
       transition: color 0.3s;
+      /* No top/transform needed — parent flex centers it */
     }
     .toggle-pass:hover { color: var(--cream); }
 
@@ -211,7 +250,7 @@
       justify-content: flex-end;
       margin-top: -8px;
       margin-bottom: 24px;
-      animation: fadeUp 0.7s 0.4s both;
+      animation: fadeUp 0.7s 0.5s both;
     }
     .link-btn {
       background: none;
@@ -244,7 +283,7 @@
       overflow: hidden;
       transition: transform 0.2s, box-shadow 0.3s, opacity 0.2s;
       box-shadow: 0 6px 24px rgba(224,129,52,0.45);
-      animation: fadeUp 0.7s 0.5s both;
+      animation: fadeUp 0.7s 0.55s both;
     }
     .btn-primary::before {
       content: '';
@@ -263,7 +302,7 @@
       align-items: center;
       gap: 12px;
       margin: 22px 0;
-      animation: fadeUp 0.7s 0.58s both;
+      animation: fadeUp 0.7s 0.62s both;
     }
     .or-line { flex:1; height:1px; background:rgba(255,255,255,0.12); }
     .or-label { font-size:11.5px; font-weight:500; color:rgba(255,255,255,0.4); letter-spacing:1px; }
@@ -284,7 +323,7 @@
       justify-content: center;
       gap: 10px;
       transition: background 0.3s, border-color 0.3s, transform 0.2s;
-      animation: fadeUp 0.7s 0.65s both;
+      animation: fadeUp 0.7s 0.68s both;
     }
     .btn-google:hover {
       background: rgba(255,255,255,0.15);
@@ -297,7 +336,7 @@
       margin-top: 26px;
       font-size: 13px;
       color: rgba(255,255,255,0.5);
-      animation: fadeUp 0.7s 0.72s both;
+      animation: fadeUp 0.7s 0.75s both;
     }
     .register-row .link-btn {
       font-size: 13px;
@@ -457,6 +496,28 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label for="purposeVisit">Purpose of Visit <span style="color:#E08134">*</span></label>
+          <div class="input-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+              <circle cx="12" cy="9" r="2.5"/>
+            </svg>
+            <select id="purposeVisit" required>
+              <option value="">Select purpose of your visit...</option>
+              <option value="Library Research">📚 Library Research</option>
+              <option value="Book Borrowing">📖 Book Borrowing</option>
+              <option value="Group Study">👥 Group Study</option>
+              <option value="Computer Use">💻 Computer Use</option>
+              <option value="Printing/Photocopying">🖨️ Printing/Photocopying</option>
+              <option value="Consult Librarian">🧑‍🏫 Consult Librarian</option>
+              <option value="Thesis Research">🎓 Thesis Research</option>
+              <option value="Exam Review">📝 Exam Review</option>
+              <option value="Other">❓ Other</option>
+            </select>
+          </div>
+        </div>
+
         <div class="forgot-row">
           <button type="button" class="link-btn" onclick="openModal('forgotModal')">Forgot password?</button>
         </div>
@@ -517,131 +578,120 @@
 
   <div class="toast" id="toast"></div>
 
-<!-- Supabase CDN -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-  // ✅ FIXED SUPABASE INIT (no duplicate)
-  const SUPABASE_URL = 'https://wfpqbyfgjserwlynstcx.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcHFieWZnanNlcndseW5zdGN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1ODAyODUsImV4cCI6MjA4OTE1NjI4NX0.g8rWx_RZWOwpzpKyzf_nDUBVzy3v-u2LtXYyLSL1Up8';
-  
-  const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  <script>
+    const SUPABASE_URL = 'https://wfpqbyfgjserwlynstcx.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcHFieWZnanNlcndseW5zdGN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1ODAyODUsImV4cCI6MjA4OTE1NjI4NX0.g8rWx_RZWOwpzpKyzf_nDUBVzy3v-u2LtXYyLSL1Up8';
 
-  // Toast function (keep yours)
-  let toastTimer;
-  function showToast(message, type = '') {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
-  }
+    const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // ✅ FIXED LOGIN - Uses visitor_logs table
-  async function handleLogin(e) {
-    e.preventDefault();
-    const email = document.getElementById('email').value.trim();
-    const pass = document.getElementById('password').value;
-    const loginBtn = document.getElementById('loginBtn');
+    let toastTimer;
+    function showToast(message) {
+      var toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 3200);
+    }
 
-    loginBtn.disabled = true;
-    loginBtn.textContent = 'Signing In...';
-    showToast('Checking credentials...');
+    async function handleLogin(e) {
+      e.preventDefault();
+      var email = document.getElementById('email').value.trim();
+      var pass = document.getElementById('password').value;
+      var loginBtn = document.getElementById('loginBtn');
 
-    try {
-      // Query visitor_logs (matches registration hash)
-      const { data, error } = await client
-        .from('visitor_logs')
-        .select('*')
-        .eq('email', email)
-        .eq('password', btoa(pass + 'neu-lib'))
-        .single();
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Signing In...';
+      showToast('Checking credentials...');
 
-      if (error || !data) {
-        showToast('Invalid email or password');
+      try {
+        var result = await client
+          .from('visitor_logs')
+          .select('*')
+          .eq('email', email)
+          .eq('password', btoa(pass + 'neu-lib'))
+          .single();
+
+        var data = result.data;
+        var error = result.error;
+
+        if (error || !data) {
+          showToast('Invalid email or password');
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'Sign In to Library System';
+          return;
+        }
+
+        var userData = {
+          id: data.id,
+          email: data.email,
+          fullName: data.full_name || (data.first_name + ' ' + data.last_name),
+          schoolId: data.school_id,
+          isAdmin: data.email === 'spokeWasHere@gmail.com' || data.email === 'jcesperanza@neu.edu.ph',
+          role: (data.email === 'spokeWasHere@gmail.com' || data.email === 'jcesperanza@neu.edu.ph') ? 'admin' : 'user'
+        };
+
+        localStorage.setItem('neuLibrarySession', JSON.stringify(userData));
+        showToast('Welcome ' + userData.fullName + '!');
+
+        setTimeout(function() {
+          if (userData.isAdmin) {
+            window.location.href = 'admin-dashboard.html';
+          } else {
+            window.location.href = 'neulib.html';
+          }
+        }, 1200);
+
+      } catch (err) {
+        showToast('Login failed. Try again.');
+        console.error(err);
+      } finally {
         loginBtn.disabled = false;
         loginBtn.textContent = 'Sign In to Library System';
-        return;
       }
-
-      // ✅ LOGIN SUCCESS - Role-based redirect
-      const userData = {
-        id: data.id,
-        email: data.email,
-        fullName: data.full_name || `${data.first_name} ${data.last_name}`,
-        schoolId: data.school_id,
-        isAdmin: data.email === 'spokeWasHere@gmail.com' || data.email === 'jcesperanza@neu.edu.ph',
-        role: (data.email === 'spokeWasHere@gmail.com' || data.email === 'jcesperanza@neu.edu.ph') ? 'admin' : 'user'
-      };
-
-      // Save secure session
-      localStorage.setItem('neuLibrarySession', JSON.stringify(userData));
-      
-      showToast(`Welcome ${userData.fullName}!`);
-      
-      // Role-based redirect
-      setTimeout(() => {
-        if (userData.isAdmin) {
-          window.location.href = 'admin-dashboard.html';  // Admin stats
-        } else {
-          window.location.href = 'neulib.html';  // Regular user
-        }
-      }, 1200);
-
-    } catch (err) {
-      showToast('Login failed. Try again.');
-      console.error(err);
-    } finally {
-      loginBtn.disabled = false;
-      loginBtn.textContent = 'Sign In to Library System';
     }
-  }
 
-  // 🛡️ Password toggle (keep yours)
-  const toggleBtn = document.getElementById('togglePass');
-  const passwordInput = document.getElementById('password');
-  const eyeIcon = document.getElementById('eyeIcon');
-  let passVisible = false;
+    var toggleBtn = document.getElementById('togglePass');
+    var passwordInput = document.getElementById('password');
+    var eyeIcon = document.getElementById('eyeIcon');
+    var passVisible = false;
 
-  toggleBtn.addEventListener('click', () => {
-    passVisible = !passVisible;
-    passwordInput.type = passVisible ? 'text' : 'password';
-    eyeIcon.innerHTML = passVisible
-      ? `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`
-      : `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
-  });
-
-  // Modal functions (keep yours)
-  function openModal(id) { document.getElementById(id).classList.add('active'); }
-  function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-  document.querySelectorAll('.modal-overlay').forEach(overlay => {
-    overlay.addEventListener('click', function(e) {
-      if (e.target === this) this.classList.remove('active');
+    toggleBtn.addEventListener('click', function() {
+      passVisible = !passVisible;
+      passwordInput.type = passVisible ? 'text' : 'password';
+      eyeIcon.innerHTML = passVisible
+        ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>'
+        : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
     });
-  });
 
-  // Google login (disabled for now - use email/password)
-  async function handleGoogleLogin() {
-    showToast('Use email/password login for now');
-  }
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-  // Forgot password (placeholder)
-  async function handleForgotPassword(e) {
-    e.preventDefault();
-    showToast('Contact admin for password reset');
-    closeModal('forgotModal');
-  }
+    document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('active');
+      });
+    });
 
-  // ADD THIS AT THE VERY END of <script> (before </script>)
-function logout() {
-  localStorage.removeItem('neuLibrarySession');
-  showToast('Logged out successfully');
-  setTimeout(() => {
-    window.location.href = 'index.html';
-  }, 800);
-}
+    async function handleGoogleLogin() {
+      showToast('Use email/password login for now');
+    }
 
-</script>
+    async function handleForgotPassword(e) {
+      e.preventDefault();
+      showToast('Contact admin for password reset');
+      closeModal('forgotModal');
+    }
+
+    function logout() {
+      localStorage.removeItem('neuLibrarySession');
+      showToast('Logged out successfully');
+      setTimeout(function() {
+        window.location.href = 'index.html';
+      }, 800);
+    }
+  </script>
 </body>
 </html>
